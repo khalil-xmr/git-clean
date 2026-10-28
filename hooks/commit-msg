@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# git-clean: rejects commits containing AI attribution trailers.
+
+COMMIT_MSG_FILE="$1"
+
+if grep -qEi "(co-authored-by:\s*(claude|chatgpt|openai|copilot|gemini|assistant)|generated (with|by) (ai|claude|gemini))" "$COMMIT_MSG_FILE"; then
+  echo "[git-clean] Error: Commit message contains an AI attribution trailer." >&2
+  echo "[git-clean] Remove any Co-Authored-By or generated-by lines to proceed." >&2
+  exit 1
+fi
